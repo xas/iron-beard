@@ -5,23 +5,23 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Colorful.Console" Version="1.2.9" />
-    <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="2.2.5" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="2.1.1" />
+    <PackageReference Include="Colorful.Console" Version="1.2.15" />
+    <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="5.0.1" />
   </ItemGroup>
 
   <PropertyGroup>
     <PackageId>IronBeard</PackageId>
-    <Authors>Wade Kallhoff</Authors>
+    <Authors>Wade Kallhoff, Xas</Authors>
 
     <AssemblyName>beard</AssemblyName>
     <OutputType>Exe</OutputType>
     <IsPackable>true</IsPackable>
     <PackAsTool>true</PackAsTool>
     <Description>A simple command-line static site generator for .NET Core</Description>
-    <Version>1.0.0.0</Version>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
-    <LangVersion>7.1</LangVersion> 
+    <Version>1.1.0.0</Version>
+    <TargetFramework>net5</TargetFramework>
     <PreserveCompilationContext>true</PreserveCompilationContext>
     <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
   </PropertyGroup>

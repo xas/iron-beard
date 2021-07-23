@@ -29,11 +29,11 @@ namespace IronBeard.Core.Features.Markdown
         private const string YAML_DEL = "---";
 
         public MarkdownProcessor(IFileSystem fileSystem, ILogger logger, IUrlProvider urlProvider, BeardConfig config, GeneratorContext context){
-            this._log = logger;
-            this._fileSystem = fileSystem;
-            this._urlProvider = urlProvider;
-            this._context = context;
-            this._config = config;
+            _log = logger;
+            _fileSystem = fileSystem;
+            _urlProvider = urlProvider;
+            _context = context;
+            _config = config;
 
             // Enable MarkdownExtensions if configured
             if (_config.EnableMarkdownExtensions)
@@ -58,14 +58,14 @@ namespace IronBeard.Core.Features.Markdown
             if (!file.Extension.ToLower().Equals(".md"))
                 return null;
 
-            this._log.Info<MarkdownProcessor>($"Processing Input: {file.RelativePath}");
+            _log.Info<MarkdownProcessor>($"Processing Input: {file.RelativePath}");
 
-            var markdown = await this._fileSystem.ReadAllTextAsync(file.FullPath);
+            var markdown = await _fileSystem.ReadAllTextAsync(file.FullPath);
             if (!markdown.IsSet())
                 return null;
 
             // extract our metadata
-            var result = this.ExtractYamlMetadata(markdown);
+            var result = ExtractYamlMetadata(markdown);
 
             // convert markdown to HTML
             var html = Markdig.Markdown.ToHtml(result.markdown, _pipeline);
@@ -73,9 +73,9 @@ namespace IronBeard.Core.Features.Markdown
             var output = OutputFile.FromInputFile(file);
             output.Content = html;
             output.Extension = ".html";
-            output.BaseDirectory = this._context.OutputDirectory;
+            output.BaseDirectory = _context.OutputDirectory;
             output.Metadata = result.metadata;
-            output.Url = this._urlProvider.GetUrl(file);
+            output.Url = _urlProvider.GetUrl(file);
 
             return output;
         }
@@ -106,7 +106,7 @@ namespace IronBeard.Core.Features.Markdown
                 metadata = deserializer.Deserialize<Dictionary<string, string>>(yamlString);
             }
             catch(Exception e){
-                this._log.Error<MarkdownProcessor>("Error parsing YAML metadata: " + e.Message);
+                _log.Error<MarkdownProcessor>("Error parsing YAML metadata: " + e.Message);
             }
 
             return (markdown, metadata);

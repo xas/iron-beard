@@ -21,7 +21,7 @@ namespace IronBeard.Core.Features.Formatting
         private ILogger _log;
 
         public HtmlFormatProcessor(ILogger logger){
-            this._log = logger;
+            _log = logger;
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace IronBeard.Core.Features.Formatting
             if(!file.Extension.IgnoreCaseEquals(".html"))
                 return Task.CompletedTask;
 
-            this._log.Info<HtmlFormatProcessor>("Formatting " + file.RelativePath);
+            _log.Info<HtmlFormatProcessor>("Formatting " + file.RelativePath);
             try
             {
                 // simply by parsing with XElement, it formats the content
@@ -46,7 +46,7 @@ namespace IronBeard.Core.Features.Formatting
             catch(Exception e)
             {
                 // The only real exception thrown relates to the content not being well formed
-                this._log.Warn<HtmlFormatProcessor>($"{file.RelativePath} isn't well formed XML / HTML : {e.Message}");
+                _log.Warn<HtmlFormatProcessor>($"{file.RelativePath} isn't well formed XML / HTML : {e.Message}");
             }
             return Task.CompletedTask;
         }

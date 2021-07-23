@@ -32,7 +32,7 @@ namespace IronBeard.Core.Features.Routing
         private BeardConfig _config;
 
         public UrlProvider(BeardConfig config){
-            this._config = config;
+            _config = config;
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace IronBeard.Core.Features.Routing
 
             // for our Index files, we just return the directory path. The static servers
             // automatically look for the index.html file to render
-            if(file.Name.IgnoreCaseEquals(this._config.IndexFileName))
+            if(file.Name.IgnoreCaseEquals(_config.IndexFileName))
                 return file.RelativeDirectory;
 
             // For any other file, determine what the eventual extension will be.
@@ -55,7 +55,7 @@ namespace IronBeard.Core.Features.Routing
                     ?  ".html" : file.Extension;
 
             // check if we need to exclude HTML extensions. If so, exclude it from the URL as well
-            extension = this._config.ExcludeHtmlExtension && extension.IgnoreCaseEquals(".html") ? string.Empty : extension;
+            extension = _config.ExcludeHtmlExtension && extension.IgnoreCaseEquals(".html") ? string.Empty : extension;
 
             // return resulting URL
             return Path.Combine(file.RelativeDirectory, file.Name + extension);

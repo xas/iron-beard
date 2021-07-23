@@ -1,7 +1,3 @@
-using System;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
@@ -11,6 +7,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewEngines;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Routing;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace IronBeard.Core.Features.Razor
 {
@@ -24,11 +23,11 @@ namespace IronBeard.Core.Features.Razor
         private ITempDataProvider _tempDataProvider;
         private IServiceProvider _serviceProvider;
 
-        public RazorViewToStringRenderer(IRazorViewEngine viewEngine,ITempDataProvider tempDataProvider,IServiceProvider serviceProvider)
+        public RazorViewToStringRenderer(IRazorViewEngine viewEngine, ITempDataProvider tempDataProvider, IServiceProvider serviceProvider)
         {
-            this._viewEngine = viewEngine;
-            this._tempDataProvider = tempDataProvider;
-            this._serviceProvider = serviceProvider;
+            _viewEngine = viewEngine;
+            _tempDataProvider = tempDataProvider;
+            _serviceProvider = serviceProvider;
         }
 
         /// <summary>
@@ -46,7 +45,7 @@ namespace IronBeard.Core.Features.Razor
 
             using (var output = new StringWriter())
             {
-                var viewContext = this.GetViewContext(model, actionContext, output, view);
+                var viewContext = GetViewContext(model, actionContext, output, view);
                 await view.RenderAsync(viewContext);
                 return output.ToString();
             }
@@ -92,7 +91,8 @@ namespace IronBeard.Core.Features.Razor
         /// <param name="view">View to render</param>
         /// <typeparam name="T">Type of model</typeparam>
         /// <returns>View Context</returns>
-        private ViewContext GetViewContext<T>(T model, ActionContext action, StringWriter output, IView view){
+        private ViewContext GetViewContext<T>(T model, ActionContext action, StringWriter output, IView view)
+        {
             var viewDataDictionary = new ViewDataDictionary<T>(new EmptyModelMetadataProvider(), new ModelStateDictionary()) { Model = model };
             var tempDataDictionary = new TempDataDictionary(action.HttpContext, _tempDataProvider);
             return new ViewContext(action, view, viewDataDictionary, tempDataDictionary, output, new HtmlHelperOptions());

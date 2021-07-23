@@ -37,10 +37,10 @@ namespace IronBeard.Core.Features.Generator
         public IEnumerable<OutputFile> OutputFiles { get; set; }
 
         public GeneratorContext(string inputDir, string outputDir){
-            this.InputDirectory = inputDir;
-            this.OutputDirectory = outputDir;
-            this.InputFiles = new List<InputFile>();
-            this.OutputFiles = new List<OutputFile>();
+            InputDirectory = inputDir;
+            OutputDirectory = outputDir;
+            InputFiles = new List<InputFile>();
+            OutputFiles = new List<OutputFile>();
         }
     }
 }

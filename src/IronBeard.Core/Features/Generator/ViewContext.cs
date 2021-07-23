@@ -39,12 +39,12 @@ namespace IronBeard.Core.Features.Generator
         public BeardConfig Config { get; set; }
 
         public ViewContext(OutputFile current, GeneratorContext context, BeardConfig config){
-            this.Current = current;
+            Current = current;
 
-            this.Siblings = context.OutputFiles.Where(x => x.RelativeDirectory.Equals(current.RelativeDirectory) && x != current);
-            this.Children = context.OutputFiles.Where(x => x.RelativeDirectory.Contains(current.RelativeDirectory) && !x.RelativeDirectory.Equals(current.RelativeDirectory));
-            this.All = context.OutputFiles;
-            this.Config = config;
+            Siblings = context.OutputFiles.Where(x => x.RelativeDirectory.Equals(current.RelativeDirectory) && x != current);
+            Children = context.OutputFiles.Where(x => x.RelativeDirectory.Contains(current.RelativeDirectory) && !x.RelativeDirectory.Equals(current.RelativeDirectory));
+            All = context.OutputFiles;
+            Config = config;
         }
     }
 }

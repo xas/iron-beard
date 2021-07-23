@@ -18,7 +18,7 @@ using System.Reflection;
 
 namespace IronBeard.Cli.Features.Commands
 {
-    [Command(Description = "Generates a static site from the files in the given directory", ThrowOnUnexpectedArgument = false)]
+    [Command(Description = "Generates a static site from the files in the given directory", UnrecognizedArgumentHandling = UnrecognizedArgumentHandling.CollectAndContinue)]
     public class GenerateCommand
     {
         [Option("-i|--input <PATH>", "Provide the root directory where Iron Beard should look for files to generate a static site from.", CommandOptionType.SingleValue)]
@@ -58,7 +58,7 @@ namespace IronBeard.Cli.Features.Commands
 
             try{
                 var startTime = DateTime.Now;
-                logger.Info<GenerateCommand>($"--- Iron Beard v{this.GetVersion()} --- ");
+                logger.Info<GenerateCommand>($"--- Iron Beard v{GetVersion()} --- ");
                 await generator.Generate();
                 var completeTime = DateTime.Now;
                 logger.Info<GenerateCommand>($"Completed in {(completeTime - startTime).TotalSeconds.ToString("N2")}s");

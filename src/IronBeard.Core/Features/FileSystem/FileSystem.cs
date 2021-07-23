@@ -97,8 +97,8 @@ namespace IronBeard.Core.Features.FileSystem
         private BeardConfig _config;
 
         public DiskFileSystem(ILogger logger, BeardConfig config){
-            this._log = logger;
-            this._config = config;
+            _log = logger;
+            _config = config;
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace IronBeard.Core.Features.FileSystem
         public IEnumerable<InputFile> GetFiles(string directoryPath)
         {
             var directory = new DirectoryInfo(directoryPath);
-            return directory.EnumerateFiles("*.*", SearchOption.AllDirectories).Select(x => this.MapFileInfoToInputFile(x, directoryPath));
+            return directory.EnumerateFiles("*.*", SearchOption.AllDirectories).Select(x => MapFileInfoToInputFile(x, directoryPath));
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace IronBeard.Core.Features.FileSystem
         /// <returns>Task</returns>
         public async Task WriteOutputFilesAsync(IEnumerable<OutputFile> files){
             foreach(var file in files){
-                await this.WriteOutputFileAsync(file);
+                await WriteOutputFileAsync(file);
             }
         }
 
@@ -146,12 +146,12 @@ namespace IronBeard.Core.Features.FileSystem
         public async Task WriteOutputFileAsync(OutputFile file){
 
             // ensure we account for excluding HTML extensions
-            if(this._config.ExcludeHtmlExtension && file.Extension.IgnoreCaseEquals(".html") && !file.Name.Equals(this._config.IndexFileName))
+            if(_config.ExcludeHtmlExtension && file.Extension.IgnoreCaseEquals(".html") && !file.Name.Equals(_config.IndexFileName))
                 file.Extension = string.Empty;
 
             // if we are just supposed to copy the file, just copy it
             if(file.DirectCopy){
-                await this.CopyOutputFileAsync(file);
+                await CopyOutputFileAsync(file);
                 return;
             }
             
@@ -159,7 +159,7 @@ namespace IronBeard.Core.Features.FileSystem
             Directory.CreateDirectory(file.FullDirectory);
             using (var writer = File.CreateText(file.FullPath))
             {
-                this._log.Info<DiskFileSystem>($"Writing Output File : {Path.Combine(file.RelativeDirectory, file.Name + file.Extension)}");
+                _log.Info<DiskFileSystem>($"Writing Output File : {Path.Combine(file.RelativeDirectory, file.Name + file.Extension)}");
                 await writer.WriteLineAsync(file.Content).ConfigureAwait(false);
             } 
         }
@@ -199,13 +199,13 @@ namespace IronBeard.Core.Features.FileSystem
         public Task<string> CreateTempFolderAsync(string directoryPath)
         {
             // if we have already created the temp folder, reuse it
-            if(this._tempFolderBase.IsSet() && this._tempFolderPath.IsSet())
-                return Task.FromResult(this._tempFolderPath);
+            if(_tempFolderBase.IsSet() && _tempFolderPath.IsSet())
+                return Task.FromResult(_tempFolderPath);
 
-            this._tempFolderBase = directoryPath;
-            this._tempFolderPath = Path.Combine(directoryPath, Guid.NewGuid().ToString());
-            Directory.CreateDirectory(this._tempFolderPath);
-            return Task.FromResult(this._tempFolderPath);
+            _tempFolderBase = directoryPath;
+            _tempFolderPath = Path.Combine(directoryPath, Guid.NewGuid().ToString());
+            Directory.CreateDirectory(_tempFolderPath);
+            return Task.FromResult(_tempFolderPath);
         }
 
         /// <summary>
@@ -215,10 +215,10 @@ namespace IronBeard.Core.Features.FileSystem
         public async Task DeleteTempFolderAsync()
         {
             // if we don't have a temp folder, return
-            if(!this._tempFolderPath.IsSet())
+            if(!_tempFolderPath.IsSet())
                 return;
 
-            await this.DeleteDirectoryAsync(this._tempFolderPath);
+            await DeleteDirectoryAsync(_tempFolderPath);
         }
 
         /// <summary>
@@ -231,16 +231,16 @@ namespace IronBeard.Core.Features.FileSystem
         /// <returns>InputFile reference to new temp file</returns>
         public async Task<InputFile> CreateTempFileAsync(string content, string extension)
         {
-            if(!this._tempFolderPath.IsSet())
+            if(!_tempFolderPath.IsSet())
                 throw new Exception("Temp folder must be created before Temp file");
 
-            var filePath = Path.Combine(this._tempFolderPath, Guid.NewGuid().ToString() + extension);
+            var filePath = Path.Combine(_tempFolderPath, Guid.NewGuid().ToString() + extension);
             using (var writer = File.CreateText(filePath))
             {
                 await writer.WriteLineAsync(content).ConfigureAwait(false);
             }
 
-            return this.MapFileInfoToInputFile(new FileInfo(filePath), this._tempFolderBase);
+            return MapFileInfoToInputFile(new FileInfo(filePath), _tempFolderBase);
         }
 
         /// <summary>

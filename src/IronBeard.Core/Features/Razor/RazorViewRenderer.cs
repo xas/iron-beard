@@ -1,18 +1,15 @@
-using System;
+using IronBeard.Core.Features.Generator;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Hosting.Internal;
+using Microsoft.Extensions.ObjectPool;
+using Microsoft.Extensions.PlatformAbstractions;
 using System.Diagnostics;
 using System.Reflection;
 using System.Threading.Tasks;
-using IronBeard.Core.Features.Configuration;
-using IronBeard.Core.Features.Generator;
-using IronBeard.Core.Features.Logging;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Hosting.Internal;
-using Microsoft.AspNetCore.Mvc.Razor;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.FileProviders;
-using Microsoft.Extensions.ObjectPool;
-using Microsoft.Extensions.Options;
-using Microsoft.Extensions.PlatformAbstractions;
 
 namespace IronBeard.Core.Features.Razor
 {
@@ -26,8 +23,8 @@ namespace IronBeard.Core.Features.Razor
         private string _inputDirectory;
 
         public RazorViewRenderer(GeneratorContext context){
-            this._inputDirectory = context.InputDirectory;
-            this.Setup();
+            _inputDirectory = context.InputDirectory;
+            Setup();
         }
 
         /// <summary>
@@ -38,7 +35,7 @@ namespace IronBeard.Core.Features.Razor
         /// <typeparam name="T">Type of model</typeparam>
         /// <returns>String of rendered content</returns>
         public async Task<string> RenderAsync<T>(string viewPath, T model ){
-            return await this._renderer.RenderViewToStringAsync(viewPath, model);
+            return await _renderer.RenderViewToStringAsync(viewPath, model);
         }
 
         /// <summary>
@@ -53,30 +50,29 @@ namespace IronBeard.Core.Features.Razor
             var applicationEnvironment = PlatformServices.Default.Application;
             services.AddSingleton(applicationEnvironment);
 
-            var environment = new HostingEnvironment
+            var environment = new WebHostEnvironment
             {
                 ApplicationName = Assembly.GetEntryAssembly().GetName().Name
             };
-            services.AddSingleton<IHostingEnvironment>(environment);
-
-            // sets up the context of the renderer to our input directory. Paths
-            // to views are relative to this directory
-            services.Configure<RazorViewEngineOptions>(options =>
-            {
-                options.FileProviders.Clear();
-                options.FileProviders.Add(new PhysicalFileProvider(this._inputDirectory));
-            });
+            services.AddSingleton<IWebHostEnvironment>(environment);
 
             services.AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
 
             var diagnosticSource = new DiagnosticListener("Microsoft.AspNetCore");
             services.AddSingleton<DiagnosticSource>(diagnosticSource);
+            services.AddSingleton(diagnosticSource);
 
             services.AddLogging();
-            services.AddMvc();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation(options =>
+            {
+                // sets up the context of the renderer to our input directory. Paths
+                // to views are relative to this directory
+                options.FileProviders.Clear();
+                options.FileProviders.Add(new PhysicalFileProvider(_inputDirectory));
+            });
             services.AddSingleton<RazorViewToStringRenderer>();
             var provider = services.BuildServiceProvider();
-            this._renderer = provider.GetRequiredService<RazorViewToStringRenderer>();
+            _renderer = provider.GetRequiredService<RazorViewToStringRenderer>();
         }
     }
 }
