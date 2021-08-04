@@ -1,10 +1,8 @@
-using System;
-using System.Threading.Tasks;
-using IronBeard.Core.Features.Configuration;
-using IronBeard.Core.Features.Generator;
 using IronBeard.Cli.Features.Logging;
+using IronBeard.Core.Features.Configuration;
 using IronBeard.Core.Features.FileSystem;
 using IronBeard.Core.Features.Formatting;
+using IronBeard.Core.Features.Generator;
 using IronBeard.Core.Features.Logging;
 using IronBeard.Core.Features.Markdown;
 using IronBeard.Core.Features.Razor;
@@ -13,8 +11,10 @@ using IronBeard.Core.Features.Static;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 
 namespace IronBeard.Cli.Features.Commands
 {
@@ -93,7 +93,7 @@ namespace IronBeard.Cli.Features.Commands
             configuration.Bind("Config", config);
             services.AddSingleton(config);
 
-            services.AddSingleton<GeneratorContext>(new GeneratorContext(inputDirectory, outputDirectory));
+            services.AddSingleton<GeneratorContext>(new GeneratorContext(inputDirectory, outputDirectory, config.RemoveOutputFolder));
             services.AddSingleton<MarkdownProcessor>();
             services.AddSingleton<RazorProcessor>();
             services.AddSingleton<StaticProcessor>();

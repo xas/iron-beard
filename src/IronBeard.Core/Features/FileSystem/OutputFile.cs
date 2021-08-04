@@ -23,5 +23,18 @@ namespace IronBeard.Core.Features.FileSystem
                 Input = file
             };
         }
+
+        public string SafeGetMetadataValue(string key)
+        {
+            if (string.IsNullOrEmpty(key) || Metadata == null)
+            {
+                return null;
+            }
+            if (Metadata.TryGetValue(key, out string metadataValue))
+            {
+                return metadataValue;
+            }
+            return null;
+        }
     }
 }

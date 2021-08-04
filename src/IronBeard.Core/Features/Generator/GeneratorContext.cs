@@ -1,5 +1,5 @@
-using System.Collections.Generic;
 using IronBeard.Core.Features.FileSystem;
+using System.Collections.Generic;
 
 namespace IronBeard.Core.Features.Generator
 {
@@ -36,11 +36,18 @@ namespace IronBeard.Core.Features.Generator
         /// </summary>
         public IEnumerable<OutputFile> OutputFiles { get; set; }
 
-        public GeneratorContext(string inputDir, string outputDir){
+        /// <summary>
+        /// Used to indicate to remove the output folder when generating the static site.
+        /// Useful when a tool like dotnet-serve is running in the background
+        /// </summary>
+        public bool ShouldRemoveOutputFolder { get; }
+
+        public GeneratorContext(string inputDir, string outputDir, bool shouldRemoveOutputFolder){
             InputDirectory = inputDir;
             OutputDirectory = outputDir;
             InputFiles = new List<InputFile>();
             OutputFiles = new List<OutputFile>();
+            ShouldRemoveOutputFolder = shouldRemoveOutputFolder;
         }
     }
 }

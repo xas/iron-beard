@@ -1,9 +1,6 @@
-﻿
-
-using System;
-using System.Threading.Tasks;
-using IronBeard.Cli.Features.Commands;
+﻿using IronBeard.Cli.Features.Commands;
 using McMaster.Extensions.CommandLineUtils;
+using System.Threading.Tasks;
 
 namespace IronBeard.Cli
 {

@@ -1,8 +1,7 @@
-
-using System.Collections.Generic;
-using System.Linq;
 using IronBeard.Core.Features.Configuration;
 using IronBeard.Core.Features.FileSystem;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace IronBeard.Core.Features.Generator
 {
@@ -45,6 +44,20 @@ namespace IronBeard.Core.Features.Generator
             Children = context.OutputFiles.Where(x => x.RelativeDirectory.Contains(current.RelativeDirectory) && !x.RelativeDirectory.Equals(current.RelativeDirectory));
             All = context.OutputFiles;
             Config = config;
+        }
+
+        public IEnumerable<OutputFile> GetFilesFromType(string type)
+        {
+            if (Children == null || !Children.Any())
+            {
+                return Enumerable.Empty<OutputFile>();
+            }
+            if (string.IsNullOrEmpty(type))
+            {
+                return Enumerable.Empty<OutputFile>();
+            }
+
+            return Children.Where(x => x.Metadata != null && x.Metadata.ContainsKey("Type") && x.Metadata["Type"].ToLowerInvariant() == type);
         }
     }
 }

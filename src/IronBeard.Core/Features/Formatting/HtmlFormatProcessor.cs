@@ -1,11 +1,10 @@
+using IronBeard.Core.Extensions;
+using IronBeard.Core.Features.FileSystem;
+using IronBeard.Core.Features.Logging;
+using IronBeard.Core.Features.Shared;
 using System;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using IronBeard.Core.Extensions;
-using IronBeard.Core.Features.FileSystem;
-using IronBeard.Core.Features.Generator;
-using IronBeard.Core.Features.Logging;
-using IronBeard.Core.Features.Shared;
 
 namespace IronBeard.Core.Features.Formatting
 {
@@ -38,6 +37,10 @@ namespace IronBeard.Core.Features.Formatting
                 return Task.CompletedTask;
 
             _log.Info<HtmlFormatProcessor>("Formatting " + file.RelativePath);
+            if (string.IsNullOrEmpty(file.Content))
+            {
+                _log.Info<HtmlFormatProcessor>("File was empty");
+            }
             try
             {
                 // simply by parsing with XElement, it formats the content

@@ -1,12 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using IronBeard.Core.Extensions;
 using IronBeard.Core.Features.FileSystem;
 using IronBeard.Core.Features.Logging;
 using IronBeard.Core.Features.Shared;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace IronBeard.Core.Features.Generator
 {
@@ -55,8 +54,11 @@ namespace IronBeard.Core.Features.Generator
 
                 _log.Info<StaticGenerator>("Starting IronBeard...");
 
-                _log.Info<StaticGenerator>("Clearing output directory...");
-                await _fileSystem.DeleteDirectoryAsync(_context.OutputDirectory);
+                if (_context.ShouldRemoveOutputFolder)
+                {
+                    _log.Info<StaticGenerator>("Clearing output directory...");
+                    await _fileSystem.DeleteDirectoryAsync(_context.OutputDirectory);
+                }
 
                 _log.Info<StaticGenerator>("Creating temp directory...");
                 await _fileSystem.CreateTempFolderAsync(_context.InputDirectory);

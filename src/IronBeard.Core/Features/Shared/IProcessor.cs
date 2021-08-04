@@ -1,6 +1,5 @@
-using System.Threading.Tasks;
 using IronBeard.Core.Features.FileSystem;
-using IronBeard.Core.Features.Generator;
+using System.Threading.Tasks;
 
 namespace IronBeard.Core.Features.Shared
 {

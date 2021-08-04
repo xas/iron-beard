@@ -1,9 +1,8 @@
+using McMaster.Extensions.CommandLineUtils;
 using System;
-using System.Drawing;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using McMaster.Extensions.CommandLineUtils;
 
 namespace IronBeard.Cli.Features.Commands
 {

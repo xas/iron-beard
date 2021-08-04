@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Threading.Tasks;
 using IronBeard.Core.Extensions;
 using IronBeard.Core.Features.Configuration;
 using IronBeard.Core.Features.FileSystem;
@@ -10,7 +6,9 @@ using IronBeard.Core.Features.Logging;
 using IronBeard.Core.Features.Routing;
 using IronBeard.Core.Features.Shared;
 using Markdig;
-using Markdig.Extensions.Yaml;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using YamlDotNet.Serialization;
 
 namespace IronBeard.Core.Features.Markdown

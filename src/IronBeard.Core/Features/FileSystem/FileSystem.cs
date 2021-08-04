@@ -1,14 +1,12 @@
+using IronBeard.Core.Extensions;
+using IronBeard.Core.Features.Configuration;
+using IronBeard.Core.Features.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Extensions.FileProviders;
-using IronBeard.Core.Extensions;
-using IronBeard.Core.Features.Shared;
-using IronBeard.Core.Features.Logging;
-using IronBeard.Core.Features.Configuration;
 
 namespace IronBeard.Core.Features.FileSystem
 {

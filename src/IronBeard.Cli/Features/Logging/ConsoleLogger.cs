@@ -1,6 +1,5 @@
-using IronBeard.Core.Features.Logging;
-using IronBeard.Core.Extensions;
 using Colorful;
+using IronBeard.Core.Features.Logging;
 using System.Drawing;
 
 namespace IronBeard.Cli.Features.Logging

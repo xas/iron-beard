@@ -1,9 +1,7 @@
-using System;
-using System.IO;
 using IronBeard.Core.Extensions;
 using IronBeard.Core.Features.Configuration;
 using IronBeard.Core.Features.FileSystem;
-using Microsoft.Extensions.Options;
+using System.IO;
 
 namespace IronBeard.Core.Features.Routing
 {
