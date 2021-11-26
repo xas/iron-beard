@@ -1,30 +1,33 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup>
-    <ProjectReference Include="..\IronBeard.Core\IronBeard.Core.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\IronBeard.Core\IronBeard.Core.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Colorful.Console" Version="1.2.15" />
-    <PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="3.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" Version="6.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Colorful.Console" Version="1.2.15" />
+		<PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="3.1.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Primitives" Version="6.0.0" />
+	</ItemGroup>
 
-  <PropertyGroup>
-    <PackageId>IronBeardCore</PackageId>
-    <Authors>Wade Kallhoff, Xas</Authors>
+	<PropertyGroup>
+		<PackageId>IronBeardCore</PackageId>
+		<Authors>Wade Kallhoff, Xas</Authors>
 
-    <AssemblyName>beard-core</AssemblyName>
-	<ToolCommandName>bear-core</ToolCommandName>
-    <OutputType>Exe</OutputType>
-    <IsPackable>true</IsPackable>
-    <PackAsTool>true</PackAsTool>
-    <Description>A simple command-line static site generator for .NET Core</Description>
-    <Version>1.1.1.0</Version>
-    <TargetFramework>net6</TargetFramework>
-    <PreserveCompilationContext>true</PreserveCompilationContext>
-    <PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
-  </PropertyGroup>
+		<AssemblyName>beard-core</AssemblyName>
+		<ToolCommandName>bear-core</ToolCommandName>
+		<OutputType>Exe</OutputType>
+		<IsPackable>true</IsPackable>
+		<PackAsTool>true</PackAsTool>
+		<Description>A simple command-line static site generator for .NET Core</Description>
+		<Version>1.1.2</Version>
+		<PackageProjectUrl>https://github.com/xas/iron-beard/</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/xas/iron-beard/</RepositoryUrl>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<TargetFramework>net6</TargetFramework>
+		<PreserveCompilationContext>true</PreserveCompilationContext>
+		<PublishWithAspNetCoreTargetManifest>false</PublishWithAspNetCoreTargetManifest>
+	</PropertyGroup>
 
 </Project>
