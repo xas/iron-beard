@@ -39,6 +39,6 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Push to nuget
-        run: dotnet nuget push ./output/*.nupkg --api-key ${NUGET_TOKEN} --source https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols true
+        run: dotnet nuget push "./output/*.nupkg" --api-key ${NUGET_TOKEN} --source https://api.nuget.org/v3/index.json --skip-duplicate --no-symbols true
         env:
           GITHUB_TOKEN: ${{ secrets.NUGET_TOKEN }}
