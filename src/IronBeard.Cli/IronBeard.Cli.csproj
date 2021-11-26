@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <PackageId>IronBeard</PackageId>
+    <PackageId>IronBeardCore</PackageId>
     <Authors>Wade Kallhoff, Xas</Authors>
 
     <AssemblyName>beard-core</AssemblyName>
